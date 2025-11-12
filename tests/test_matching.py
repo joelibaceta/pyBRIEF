@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from core.matching import hamming_dist_bytes, match_hamming
+from pybrief.matching import hamming_dist_bytes, match_hamming
 
 @pytest.fixture
 def small_descriptors():
