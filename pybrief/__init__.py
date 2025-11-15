@@ -2,11 +2,11 @@
 pyBRIEF - Python implementation of BRIEF descriptor
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from .brief_descriptor import extract_brief
 from .brief_pattern import generate_brief_tests
-from .brief_extractor import BriefDescriptorExtractor, create_brief_extractor
+from .pybrief import PyBrief, create_brief_extractor
 from .corners import harris_corners
 from .filters import smooth, sobel_gradients, normalize
 from .matching import hamming_dist_bytes, match_hamming
@@ -18,7 +18,7 @@ __all__ = [
     '__version__',
     
     # Core BRIEF functionality
-    'BriefDescriptorExtractor',
+    'PyBrief',
     'create_brief_extractor', 
     'extract_brief',
     'generate_brief_tests',

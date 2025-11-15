@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from pybrief import BriefDescriptorExtractor, create_brief_extractor
+from pybrief import PyBrief, create_brief_extractor
 
 
 @pytest.fixture
@@ -22,8 +22,8 @@ def sample_keypoints():
 
 
 def test_brief_extractor_initialization():
-    """Test BriefDescriptorExtractor initialization."""
-    extractor = BriefDescriptorExtractor()
+    """Test PyBrief initialization."""
+    extractor = PyBrief()
     assert extractor.get_n_bits() == 256
     assert extractor.get_patch_size() == 31
     assert extractor.descriptor_size() == 32  # 256 bits = 32 bytes
@@ -32,8 +32,8 @@ def test_brief_extractor_initialization():
 
 
 def test_brief_extractor_custom_params():
-    """Test BriefDescriptorExtractor with custom parameters."""
-    extractor = BriefDescriptorExtractor(n_bits=128, patch_size=21)
+    """Test PyBrief with custom parameters."""
+    extractor = PyBrief(n_bits=128, patch_size=21)
     assert extractor.get_n_bits() == 128
     assert extractor.get_patch_size() == 21
     assert extractor.descriptor_size() == 16  # 128 bits = 16 bytes
@@ -42,14 +42,14 @@ def test_brief_extractor_custom_params():
 def test_create_brief_extractor():
     """Test the convenience function."""
     extractor = create_brief_extractor(n_bits=64)
-    assert isinstance(extractor, BriefDescriptorExtractor)
+    assert isinstance(extractor, PyBrief)
     assert extractor.get_n_bits() == 64
     assert extractor.descriptor_size() == 8  # 64 bits = 8 bytes
 
 
 def test_compute_basic(sample_image, sample_keypoints):
     """Test basic compute functionality."""
-    extractor = BriefDescriptorExtractor()
+    extractor = PyBrief()
     
     kp_out, descriptors = extractor.compute(sample_image, sample_keypoints)
     
@@ -61,7 +61,7 @@ def test_compute_basic(sample_image, sample_keypoints):
 
 def test_compute_empty_keypoints(sample_image):
     """Test compute with empty keypoints."""
-    extractor = BriefDescriptorExtractor()
+    extractor = PyBrief()
     
     kp_out, descriptors = extractor.compute(sample_image, np.array([]))
     
@@ -71,7 +71,7 @@ def test_compute_empty_keypoints(sample_image):
 
 def test_compute_none_inputs():
     """Test compute with None inputs."""
-    extractor = BriefDescriptorExtractor()
+    extractor = PyBrief()
     
     kp_out, descriptors = extractor.compute(None, None)
     
@@ -81,7 +81,7 @@ def test_compute_none_inputs():
 
 def test_compute_invalid_keypoints(sample_image):
     """Test compute with keypoints outside image bounds."""
-    extractor = BriefDescriptorExtractor(patch_size=31)
+    extractor = PyBrief(patch_size=31)
     
     # Keypoints too close to borders (within patch_size//2 = 15 pixels)
     invalid_kp = np.array([
@@ -100,7 +100,7 @@ def test_compute_invalid_keypoints(sample_image):
 
 def test_compute_mixed_keypoints(sample_image):
     """Test compute with mix of valid and invalid keypoints."""
-    extractor = BriefDescriptorExtractor(patch_size=31)
+    extractor = PyBrief(patch_size=31)
     
     mixed_kp = np.array([
         [5, 5],     # Invalid - too close to border
@@ -118,7 +118,7 @@ def test_compute_mixed_keypoints(sample_image):
 
 def test_descriptor_properties():
     """Test descriptor property methods."""
-    extractor = BriefDescriptorExtractor(n_bits=512)
+    extractor = PyBrief(n_bits=512)
     
     assert extractor.descriptor_size() == 64  # 512 bits = 64 bytes
     assert extractor.descriptor_type() == np.uint8
@@ -127,7 +127,7 @@ def test_descriptor_properties():
 
 def test_smoothing_params():
     """Test smoothing parameter getter."""
-    extractor = BriefDescriptorExtractor(smoothing_sigma=1.5, smoothing_size=7)
+    extractor = PyBrief(smoothing_sigma=1.5, smoothing_size=7)
     
     sigma, size = extractor.get_smoothing_params()
     assert sigma == 1.5
@@ -136,18 +136,18 @@ def test_smoothing_params():
 
 def test_extractor_repr():
     """Test string representation."""
-    extractor = BriefDescriptorExtractor(n_bits=128, patch_size=21)
+    extractor = PyBrief(n_bits=128, patch_size=21)
     repr_str = repr(extractor)
     
-    assert "BriefDescriptorExtractor" in repr_str
+    assert "PyBrief" in repr_str
     assert "n_bits=128" in repr_str
     assert "patch_size=21" in repr_str
 
 
 def test_compute_reproducibility(sample_image, sample_keypoints):
     """Test that compute produces consistent results."""
-    extractor1 = BriefDescriptorExtractor(rng_seed=42)
-    extractor2 = BriefDescriptorExtractor(rng_seed=42)
+    extractor1 = PyBrief(rng_seed=42)
+    extractor2 = PyBrief(rng_seed=42)
     
     _, desc1 = extractor1.compute(sample_image, sample_keypoints)
     _, desc2 = extractor2.compute(sample_image, sample_keypoints)
@@ -157,8 +157,8 @@ def test_compute_reproducibility(sample_image, sample_keypoints):
 
 def test_compute_different_seeds(sample_image, sample_keypoints):
     """Test that different seeds produce different results."""
-    extractor1 = BriefDescriptorExtractor(rng_seed=0)
-    extractor2 = BriefDescriptorExtractor(rng_seed=1)
+    extractor1 = PyBrief(rng_seed=0)
+    extractor2 = PyBrief(rng_seed=1)
     
     _, desc1 = extractor1.compute(sample_image, sample_keypoints)
     _, desc2 = extractor2.compute(sample_image, sample_keypoints)

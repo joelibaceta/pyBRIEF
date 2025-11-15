@@ -4,7 +4,7 @@ from .brief_pattern import generate_brief_tests
 from .utils import gaussian_kernel
 
 
-class BriefDescriptorExtractor:
+class PyBrief:
     """
     BRIEF (Binary Robust Independent Elementary Features) descriptor extractor.
     """
@@ -202,18 +202,18 @@ class BriefDescriptorExtractor:
     
     def __repr__(self) -> str:
         """String representation of the extractor."""
-        return (f"BriefDescriptorExtractor(n_bits={self.n_bits}, "
+        return (f"PyBrief(n_bits={self.n_bits}, "
                 f"patch_size={self.patch_size}, "
                 f"smoothing_sigma={self.smoothing_sigma}, "
                 f"smoothing_size={self.smoothing_size})")
 
 
-# Convenience function for OpenCV-like usage
+# Convenience function for easy instantiation
 def create_brief_extractor(n_bits: int = 256, 
                           patch_size: int = 31,
                           smoothing_sigma: float = 2.0,
                           smoothing_size: int = 9,
-                          rng_seed: int = 0) -> BriefDescriptorExtractor:
+                          rng_seed: int = 0) -> PyBrief:
     """
     Create a BRIEF descriptor extractor.
     
@@ -234,8 +234,8 @@ def create_brief_extractor(n_bits: int = 256,
         
     Returns
     -------
-    BriefDescriptorExtractor
+    PyBrief
         Initialized BRIEF descriptor extractor.
     """
-    return BriefDescriptorExtractor(n_bits, patch_size, smoothing_sigma, 
+    return PyBrief(n_bits, patch_size, smoothing_sigma, 
                                    smoothing_size, rng_seed)

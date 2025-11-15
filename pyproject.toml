@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pybrief"
-version = "0.1.0"
+version = "0.2.0"
 description = "Python implementation of BRIEF (Binary Robust Independent Elementary Features) descriptor"
 readme = "README.md"
 authors = [
