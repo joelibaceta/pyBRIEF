@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Tuple
 
 # Precompute popcount lookup table for 0..255
 _POPCNT8 = np.array([bin(i).count("1") for i in range(256)], dtype=np.uint8)
@@ -28,7 +29,7 @@ def match_hamming(
     descA: np.ndarray,
     descB: np.ndarray,
     ratio: float = 0.9
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Matches BRIEF descriptors using Hamming distance and ratio test.
 

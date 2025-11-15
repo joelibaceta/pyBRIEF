@@ -1,10 +1,11 @@
 import numpy as np
+from typing import Tuple
 
 def generate_brief_tests(
     n_bits: int = 256,
     patch_size: int = 31,
     rng_seed: int = 0
-) -> tuple[np.ndarray, np.ndarray]:
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     Generates BRIEF binary test pairs (p, q) using Gaussian-II sampling.
 

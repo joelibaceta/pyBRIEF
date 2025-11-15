@@ -1,7 +1,8 @@
 import numpy as np
+from typing import Optional, Tuple
 from .utils import convolve2d_same, gaussian_kernel
 
-def smooth(img: np.ndarray, kernel: np.ndarray = None) -> np.ndarray:
+def smooth(img: np.ndarray, kernel: Optional[np.ndarray] = None) -> np.ndarray:
     """
     Applies Gaussian smoothing to the image.
 
@@ -22,7 +23,7 @@ def smooth(img: np.ndarray, kernel: np.ndarray = None) -> np.ndarray:
     return convolve2d_same(img, kernel)
 
 
-def sobel_gradients(img: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def sobel_gradients(img: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """
     Computes Sobel gradients in X and Y directions.
 

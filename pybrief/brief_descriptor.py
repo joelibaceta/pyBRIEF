@@ -1,13 +1,14 @@
 import numpy as np
+from typing import Optional, Tuple
 from .filters import smooth
 
 def extract_brief(
     img: np.ndarray,
     keypoints: np.ndarray,
-    tests: tuple[np.ndarray, np.ndarray],
+    tests: Tuple[np.ndarray, np.ndarray],
     patch_size: int = 31,
-    kernel: np.ndarray = None,
-    n_bits: int | None = None
+    kernel: Optional[np.ndarray] = None,
+    n_bits: Optional[int] = None
 ) -> np.ndarray:
     """
     Extracts BRIEF descriptors for a set of keypoints.

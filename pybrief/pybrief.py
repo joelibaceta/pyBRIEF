@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Tuple
 from .brief_descriptor import extract_brief
 from .brief_pattern import generate_brief_tests
 from .utils import gaussian_kernel
@@ -41,7 +42,7 @@ class PyBrief:
         self._tests = generate_brief_tests(n_bits, patch_size, rng_seed)
         self._kernel = gaussian_kernel(smoothing_size, smoothing_sigma)
         
-    def compute(self, image: np.ndarray, keypoints: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    def compute(self, image: np.ndarray, keypoints: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """
         Compute BRIEF descriptors for the given keypoints.
         
@@ -106,7 +107,7 @@ class PyBrief:
         """
         return np.uint8
     
-    def descriptor_shape(self) -> tuple[int]:
+    def descriptor_shape(self) -> Tuple[int]:
         """
         Get the shape of a single descriptor.
         
@@ -139,7 +140,7 @@ class PyBrief:
         """
         return self.patch_size
     
-    def get_smoothing_params(self) -> tuple[float, int]:
+    def get_smoothing_params(self) -> Tuple[float, int]:
         """
         Get the smoothing parameters.
         
@@ -168,7 +169,7 @@ class PyBrief:
         # You can add logic here to detect/convert if needed
         return np.asarray(keypoints)
     
-    def _filter_valid_keypoints(self, keypoints: np.ndarray, image_shape: tuple) -> np.ndarray:
+    def _filter_valid_keypoints(self, keypoints: np.ndarray, image_shape: Tuple) -> np.ndarray:
         """
         Filter keypoints to ensure they're within valid image bounds.
         
